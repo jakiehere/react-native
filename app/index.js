@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import {
   Stack,
   useRouter,
@@ -15,11 +17,13 @@ import Welcome from '../components/home/welcome/Welcome';
 import {
   COLORS,
   icons,
+  images,
   SIZES,
 } from '../constants';
 
 const Home = () => {
     const router = useRouter();
+    const [searchTerm, setSearchTerm] = useState("");
 
     return (
         <SafeAreaView style={{flex: 1,  backgroundColor: COLORS.lightWhite }}>
@@ -28,10 +32,10 @@ const Home = () => {
                     headerStyle:{ backgroundColor: COLORS.lightWhite },
                     headerShadowVisible: false,
                     headerLeft: () => (
-                        <ScreenHeaderBtn iconUrl={icons.menu} dismension="60%" />
+                        <ScreenHeaderBtn iconUrl={icons.menu} dimension="60%" />
                     ),
                     headerRight: () => (
-                        <ScreenHeaderBtn iconUrl={icons.profile} dismension="60%" />
+                        <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
                     ),
                     headerTitle: ""
                 }}    
@@ -43,7 +47,15 @@ const Home = () => {
                         padding: SIZES.medium
                     }}
                 >
-                    <Welcome />
+                    <Welcome
+                        searchTerm={searchTerm}
+                        setSearchTerm={setSearchTerm}
+                        handleClick={() => {
+                            if (searchTerm) {
+                                router.push(`/search/${searchTerm}`)
+                            }
+                        }}
+                    />
                     <Popularjobs />
                     <Nearbyjobs />
                 </View>
